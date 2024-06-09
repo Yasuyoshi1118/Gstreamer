@@ -1,0 +1,33 @@
+[動作確認]
+
+【python 導入】
+os.add_dll_directory('C:/gstreamer/1.0/x86_64/bin')
+
+import cv2
+
+print(cv2.getBuildInformation())
+
+https://qiita.com/overheattrigger/items/c3b43e8bcce00a5c6872
+
+os.add_dll_directory('C:/gstreamer/1.0/x86_64/bin')
+
+gst-launch-1.0 videotestsrc ! videoconvert ! autovideosink
+→動作する
+
+【意味】
+gst-launch-1.0 videotestsrc（ビデオデータ） ! videoconvert（autovideosinkに合わせてコンバート） ! autovideosink
+
+
+【受信コマンド】
+
+gst-launch-1.0 -e udpsrc multicast-group=127.0.0.1 port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264" buffer-size = 50000 ! rtph264depay ! queue ! h264parse ! mp4mux ! filesink location = output.mp4
+
+gst-launch-1.0 -e udpsrc host=127.0.0.1 port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264" buffer-size = 50000 ! rtph264depay ! queue ! h264parse ! mp4mux ! filesink location = output.mp4
+
+gst-launch-1.0 -e udpsrc host=127.0.0.1 port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264" buffer-size=50000 ! rtph264depay ! queue ! h264parse ! mp4mux ! filesink location=output.mp4
+
+gst-launch-1.0 -e udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, ssrc=(uint)123456789" buffer-size=50000 ! rtph264depay ! queue ! h264parse ! mp4mux ! filesink location=output.mp4
+
+gst-launch-1.0 -e udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, ssrc=(uint)123456789" buffer-size=50000 ! rtph264depay ! queue ! h264parse ! mp4mux ! filesink location=output.mp4
+
+gst-launch-1.0 v4l2src device=/dev/video0 ! video/x-h264, width=640, height=480, framerate=30/1 ! h264parse config-interval=1 ! rtph264pay name=pay0 pt=96 )'
